@@ -1,0 +1,78 @@
+The cost of stock on each day is given in an array A[] of size N. Find all the segments of days on which you buy and sell the stock so that in between those days for which profit can be generated.
+Note: Since there can be multiple solutions, the driver code will print 1 if your answer is correct, otherwise, it will return 0. In case there's no profit the driver code will print the string "No Profit" for a correct solution.
+
+Example 1:
+
+Input:
+N = 7
+A[] = {100,180,260,310,40,535,695}
+Output:
+1
+Explanation:
+One possible solution is (0 3) (4 6)
+We can buy stock on day 0,
+and sell it on 3rd day, which will 
+give us maximum profit. Now, we buy 
+stock on day 4 and sell it on day 6.
+Example 2:
+
+Input:
+N = 5
+A[] = {4,2,2,2,4}
+Output:
+1
+Explanation:
+There are multiple possible solutions.
+one of them is (3 4)
+We can buy stock on day 3,
+and sell it on 4th day, which 
+
+
+
+def stock_buy_sell(N, A):
+    if N < 2:
+        return "No Profit"
+
+    result = []
+    i = 0
+
+    while i < N - 1:
+        # Find the local minimum as the buy day
+        while i < N - 1 and A[i + 1] <= A[i]:
+            i += 1
+
+        if i == N - 1:
+            break
+
+        buy_day = i
+
+        i += 1
+
+        # Find the local maximum as the sell day
+        while i < N and A[i] >= A[i - 1]:
+            i += 1
+
+        sell_day = i - 1
+
+        result.append((buy_day, sell_day))
+
+    if not result:
+        return "No Profit"
+    else:
+        return result
+
+# Example usage
+N1 = 7
+A1 = [100, 180, 260, 310, 40, 535, 695]
+result1 = stock_buy_sell(N1, A1)
+if result1 == "No Profit":
+    print(result1)
+else:
+    for segment in result1:
+        print(segment, end=" ")
+    # Output: (0, 3) (4, 6)
+
+N2 = 5
+A2 = [4, 2, 2, 2, 4]
+result2 = stock_buy_sell(N2, A2)
+if result2 == "
